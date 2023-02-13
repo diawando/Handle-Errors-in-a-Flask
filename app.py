@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
 
 app = Flask(__name__)
 
@@ -9,4 +9,7 @@ def index():
 @app.route('/messages/<int:idx>')
 def message(idx):
     messages = ['Message Zero', 'Message One', 'Message Two']
-    return render_template('message.html', message=messages[idx])
+    try:
+        return render_template('message.html', message=messages[idx])
+    except IndexError:
+        abort(404)
